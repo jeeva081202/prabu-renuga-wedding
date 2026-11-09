@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#6e1423">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Mukta+Malar:wght@400;500;700&family=Noto+Serif+Tamil:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Mukta+Malar:wght@400;500;700&family=Noto+Serif+Tamil:wght@600;800&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
@@ -364,6 +364,23 @@ footer .sig{font-family:var(--script);font-size:2.2rem;color:var(--gold-l)}
 footer .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 
+/* language switch */
+#lang{position:fixed;left:14px;bottom:16px;z-index:75;display:flex;padding:3px;border-radius:30px;background:rgba(255,250,240,.92);border:1px solid var(--gold);box-shadow:0 6px 18px rgba(110,20,35,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#lang button{border:0;background:transparent;cursor:pointer;font:700 .85rem var(--sans-ta);color:var(--maroon);padding:7px 14px;border-radius:24px;transition:.25s}
+#lang button[aria-pressed=true]{background:var(--maroon);color:#fff3cf}
+html[lang=en]{--serif-ta:"Cormorant Garamond",serif}
+html[lang=en] .hero h1{font-size:clamp(2.4rem,7.5vw,3.8rem);letter-spacing:.01em}
+html[lang=en] .sec-head h2{font-size:clamp(1.9rem,5.4vw,2.6rem);font-weight:700}
+html[lang=en] .names .ta{font-size:clamp(1.8rem,5.8vw,2.7rem);font-weight:700}
+html[lang=en] .person h3,html[lang=en] .event h3{font-size:2rem;font-weight:700}
+html[lang=en] .cover-title{font-size:clamp(2.3rem,8vw,3rem)}
+html[lang=en] .letter .big,html[lang=en] .letter p{font-size:1.08rem}
+html[lang=en] .letter p.en{display:none}
+html[lang=en] footer .lines{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:700}
+html[lang=en] #scratch .top{font-family:var(--en);font-size:clamp(1.5rem,5.5vw,1.9rem);font-weight:700}
+html[lang=en] #scratch .top small{font-family:var(--serif-ta);font-style:normal}
+html[lang=en] .sc-in .k1,html[lang=en] .sc-in .day,html[lang=en] .sc-in .gs{font-family:var(--en);font-size:1.12rem;font-weight:700}
+@media (max-width:760px){#lang{bottom:14px;left:12px}#lang button{padding:6px 11px;font-size:.8rem}}
 /* music button */
 #music{position:fixed;right:16px;bottom:16px;z-index:55;height:50px;padding:0 16px 0 12px;border-radius:30px;border:1px solid var(--gold);
   background:var(--maroon);color:var(--gold-xl);cursor:pointer;display:none;align-items:center;gap:8px;box-shadow:0 8px 20px rgba(0,0,0,.3);font:600 .85rem var(--sans-ta)}
@@ -415,6 +432,7 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 </head>
 <body class="locked">
 <div id="progress"></div>
+<div id="lang" role="group" aria-label="Language"><button type="button" data-l="ta">தமிழ்</button><button type="button" data-l="en">English</button></div>
 <canvas id="sparkle" aria-hidden="true"></canvas>
 <div id="shower" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status"></div>
@@ -492,8 +510,8 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
         <path d="M22 16c-2 6 0 14 8 16 2 1 3 4 2 8-1 5-6 6-7 3"/><path d="M38 16c2 6 0 12-6 15"/>
         <circle cx="26" cy="22" r="1.2" fill="#e9cf8c"/><circle cx="34" cy="22" r="1.2" fill="#e9cf8c"/>
         <path d="M27 17h6" stroke-width="2.2"/><path d="M17 46c4 6 22 6 26 0"/></g></svg>
-      <div class="cover-sub">சுபமுகூர்த்தப் பத்திரிகை</div>
-      <div class="cover-title shimmer">திருமண<br>அழைப்பிதழ்</div>
+      <div class="cover-sub" data-i18n="coverSub">சுபமுகூர்த்தப் பத்திரிகை</div>
+      <div class="cover-title shimmer" data-i18n="coverTitle">திருமண<br>அழைப்பிதழ்</div>
       <svg class="mono" viewBox="0 0 120 120" aria-hidden="true">
         <g class="ring" fill="none" stroke="#c99a3e" stroke-width="1.2"><circle cx="60" cy="60" r="52"/><circle cx="60" cy="60" r="47" stroke-dasharray="1 4"/>
           <g id="petalring"></g></g>
@@ -502,21 +520,21 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
       <div class="cover-names">Prabu &amp; Renuga</div>
       <div class="cover-date">20 · 11 · 2026</div>
       <div class="guest" id="guest"></div>
-      <button class="btn-open" id="openBtn" type="button">கோவில் கதவைத் திறக்க<small>Tap to open</small></button>
-      <div class="hint">🔊 மங்கள இசையுடன்</div>
+      <button class="btn-open" id="openBtn" type="button" data-i18n="openBtn">கோவில் கதவைத் திறக்க<small>Tap to open</small></button>
+      <div class="hint" data-i18n="hint">🔊 மங்கள இசையுடன்</div>
     </div>
   </div>
 </div>
 
 <!-- ============ SCRATCH CARD ============ -->
 <div id="scratch" role="dialog" aria-label="Scratch card">
-  <div class="top">உங்களுக்கு ஒரு இனிய செய்தி<small>Scratch the golden card to reveal</small></div>
+  <div class="top" data-i18n="scTop">உங்களுக்கு ஒரு இனிய செய்தி<small>Scratch the golden card to reveal</small></div>
   <div class="sc-card" id="scCard">
     <div class="sc-in">
       <svg class="gn" viewBox="0 0 60 60" aria-hidden="true"><g fill="none" stroke="#c99a3e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M30 6l4 6h-8z" fill="#c99a3e" fill-opacity=".3"/><path d="M22 14h16"/><path d="M21 18c-8 0-12 6-10 12 1 4 5 5 7 3"/><path d="M39 18c8 0 12 6 10 12-1 4-5 5-7 3"/><path d="M22 16c-2 6 0 14 8 16 2 1 3 4 2 8-1 5-6 6-7 3"/><path d="M38 16c2 6 0 12-6 15"/><circle cx="26" cy="22" r="1.2" fill="#c99a3e"/><circle cx="34" cy="22" r="1.2" fill="#c99a3e"/><path d="M27 17h6" stroke-width="2.2"/><path d="M17 46c4 6 22 6 26 0"/></g></svg>
-      <div class="k1">சுபமுகூர்த்தம்</div>
+      <div class="k1" data-i18n="scK1">சுபமுகூர்த்தம்</div>
       <div class="dt">20 · 11 · 2026</div>
-      <div class="day">வெள்ளிக்கிழமை<br>காலை 6:00 – 7:00 மணி</div>
+      <div class="day" data-i18n="scDay">வெள்ளிக்கிழமை<br>காலை 6:00 – 7:00 மணி</div>
       <div class="rule"></div>
       <div class="nm">Prabu &amp; Renuga</div>
       <div class="gs" id="scGuest">நீங்கள் அன்புடன்<br>அழைக்கப்படுகிறீர்கள் 🙏</div>
@@ -525,7 +543,7 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   </div>
   <div class="sc-hint" id="scHint"><span class="fing" aria-hidden="true">👆</span>விரலால் தேய்க்கவும் · Scratch with your finger</div>
   <div class="sc-bar" aria-hidden="true"><i id="scBar"></i></div>
-  <button class="btn solid sc-go" id="scGo" type="button">அழைப்பிதழைக் காண →</button>
+  <button class="btn solid sc-go" id="scGo" type="button" data-i18n="scGo">அழைப்பிதழைக் காண →</button>
   <button class="sc-skip" id="scSkip" type="button">Skip</button>
 </div>
 
@@ -539,16 +557,16 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   <!-- ============ HERO ============ -->
   <header class="hero wrap" id="top">
     <div class="mandala" aria-hidden="true"><svg viewBox="0 0 400 400" id="mandalaSvg"></svg></div>
-    <div class="blessing h-a">அருள்மிகு ஸ்ரீ நாகம்மாள் துணை · ஸ்ரீ முருகன் துணை · ஸ்ரீ கௌமாரியம்மன் துணை<br>ஸ்ரீ கலுசலிங்கம் துணை · ஸ்ரீ ஜக்கம்மாள் துணை</div>
-    <h1 class="shimmer h-a">திருமண அழைப்பிதழ்</h1>
+    <div class="blessing h-a" data-i18n="blessing">அருள்மிகு ஸ்ரீ நாகம்மாள் துணை · ஸ்ரீ முருகன் துணை · ஸ்ரீ கௌமாரியம்மன் துணை<br>ஸ்ரீ கலுசலிங்கம் துணை · ஸ்ரீ ஜக்கம்மாள் துணை</div>
+    <h1 class="shimmer h-a" data-i18n="h1">திருமண அழைப்பிதழ்</h1>
     <div class="tag h-a">Two hearts, one journey · a lifetime of togetherness</div>
 
     <div class="lamps">
       <svg class="diya h-a" viewBox="0 0 60 110" aria-hidden="true"><use href="#i-diya"/></svg>
       <div class="names">
-        <div class="n h-a"><div class="ta">செ.பிரபு<span class="deg">MCA.,</span></div><div class="sc split">Prabu</div></div>
+        <div class="n h-a"><div class="ta" data-i18n="gTa">செ.பிரபு<span class="deg">MCA.,</span></div><div class="sc split">Prabu</div></div>
         <svg class="amp h-a" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#c99a3e" stroke-width="1.6"><circle cx="24" cy="36" r="12"/><circle cx="40" cy="36" r="12"/><path class="heart" d="M32 22c-6-4-12-9-12-14a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 5-6 10-12 14z" fill="#b3261e" stroke="#6e1423"/></g></svg>
-        <div class="n h-a"><div class="ta">ச.ரேணுகா<span class="deg">B.E.,</span></div><div class="sc split">Renuga</div></div>
+        <div class="n h-a"><div class="ta" data-i18n="bTa">ச.ரேணுகா<span class="deg">B.E.,</span></div><div class="sc split">Renuga</div></div>
       </div>
       <svg class="diya h-a" viewBox="0 0 60 110" aria-hidden="true"><use href="#i-diya"/></svg>
     </div>
@@ -556,16 +574,16 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     <div class="date-ribbon en h-a" aria-label="20 November 2026, Friday">
       <div class="side">Friday</div><div class="mid">20<small>NOV 2026</small></div><div class="side">6 – 7 AM</div>
     </div>
-    <div class="date-ta h-a">கார்த்திகை 4 · வெள்ளிக்கிழமை · காலை 6:00 – 7:00 மணி</div>
-    <div class="today" id="today">🪔 இன்று திருமண நாள்! 🪔</div>
+    <div class="date-ta h-a" data-i18n="dateTa">கார்த்திகை 4 · வெள்ளிக்கிழமை · காலை 6:00 – 7:00 மணி</div>
+    <div class="today" id="today" data-i18n="today">🪔 இன்று திருமண நாள்! 🪔</div>
 
     <div class="countdown h-a" id="countdown" aria-live="off">
-      <div class="cd"><b id="cd-d">00</b><span>நாட்கள்</span></div>
-      <div class="cd"><b id="cd-h">00</b><span>மணி</span></div>
-      <div class="cd"><b id="cd-m">00</b><span>நிமிடம்</span></div>
-      <div class="cd"><b id="cd-s">00</b><span>விநாடி</span></div>
+      <div class="cd"><b id="cd-d">00</b><span data-i18n="cdD">நாட்கள்</span></div>
+      <div class="cd"><b id="cd-h">00</b><span data-i18n="cdH">மணி</span></div>
+      <div class="cd"><b id="cd-m">00</b><span data-i18n="cdM">நிமிடம்</span></div>
+      <div class="cd"><b id="cd-s">00</b><span data-i18n="cdS">விநாடி</span></div>
     </div>
-    <a class="scroll-cue h-a" href="#invite">கீழே பார்க்க<i></i></a>
+    <a class="scroll-cue h-a" href="#invite" data-i18n="scrollCue">கீழே பார்க்க<i></i></a>
   </header>
 
   <div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
@@ -573,22 +591,22 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   <!-- ============ INVITATION ============ -->
   <section class="wrap" id="invite">
     <div class="card letter reveal">
-      <div class="salute">அன்புடையீர்,</div>
-      <p class="words">நிகழும் மங்களகரமான ஸ்ரீ பராபவ வருடம் கார்த்திகை மாதம் 4-ஆம் தேதி (20-11-2026) வெள்ளிக்கிழமை ஏகாதசி திதியும், உத்திரட்டாதி நட்சத்திரமும், சித்தயோகமும் கூடிய சுக்கிலபட்சம் சுக்கிரன் ஓரையும் கூடிய சுபயோக சுபதினத்தன்று</p>
-      <div class="muhurtham">காலை 6:00 மணிக்குமேல் 7:00 மணிக்குள்</div>
+      <div class="salute" data-i18n="salute">அன்புடையீர்,</div>
+      <p class="words" data-i18n="words1">நிகழும் மங்களகரமான ஸ்ரீ பராபவ வருடம் கார்த்திகை மாதம் 4-ஆம் தேதி (20-11-2026) வெள்ளிக்கிழமை ஏகாதசி திதியும், உத்திரட்டாதி நட்சத்திரமும், சித்தயோகமும் கூடிய சுக்கிலபட்சம் சுக்கிரன் ஓரையும் கூடிய சுபயோக சுபதினத்தன்று</p>
+      <div class="muhurtham" data-i18n="muh">காலை 6:00 மணிக்குமேல் 7:00 மணிக்குள்</div>
       <svg class="divider"><use href="#i-divider"/></svg>
-      <p class="words" style="margin-top:14px">திருவளர் செல்வன் செ.பிரபு MCA., அவர்களுக்கும், திருநிறை செல்வி ச.ரேணுகா B.E., அவர்களுக்கும் திருமணம் பெரியோர்களால் நிச்சயிக்கப்பட்டு, மேற்படி திருமணம் தி.சுப்புலாபுரம் ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபத்தில் நடைபெறுவதால், தாங்கள் தங்கள் சுற்றம் சூழ வருகைதந்து மணமக்களை ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கின்றோம்.</p>
+      <p class="words" style="margin-top:14px" data-i18n="words2">திருவளர் செல்வன் செ.பிரபு MCA., அவர்களுக்கும், திருநிறை செல்வி ச.ரேணுகா B.E., அவர்களுக்கும் திருமணம் பெரியோர்களால் நிச்சயிக்கப்பட்டு, மேற்படி திருமணம் தி.சுப்புலாபுரம் ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபத்தில் நடைபெறுவதால், தாங்கள் தங்கள் சுற்றம் சூழ வருகைதந்து மணமக்களை ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கின்றோம்.</p>
       <p class="en" style="font-style:italic;color:var(--muted);font-size:1.12rem;margin-top:18px">With the blessings of our beloved families, we cordially invite you to the wedding of Prabu &amp; Renuga. Your presence will make our special day even more memorable and joyous.</p>
     </div>
   </section>
 
   <!-- ============ COUPLE ============ -->
   <section class="wrap" id="couple">
-    <div class="sec-head reveal"><h2>மணமக்கள்</h2><p>The bride &amp; groom</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="coupleH">மணமக்கள்</h2><p data-i18n="coupleP">The bride &amp; groom</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="couple">
       <article class="card person reveal tilt">
         <span class="glare"></span>
-        <span class="role">மணமகன்</span>
+        <span class="role" data-i18n="roleG">மணமகன்</span>
         <svg class="avatar" viewBox="0 0 120 120" aria-hidden="true">
           <circle cx="60" cy="60" r="56" fill="#fbf0d9" stroke="#c99a3e" stroke-width="1.5"/><circle class="orbit" cx="60" cy="60" r="50" fill="none" stroke="#c99a3e" stroke-dasharray="2 4"/>
           <path d="M36 104c2-18 10-26 24-26s22 8 24 26" fill="#f6e7bd" stroke="#6e1423" stroke-width="1.5"/>
@@ -598,18 +616,18 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
           <path d="M58 46h4" stroke="#b3261e" stroke-width="2"/><path d="M55 64q5 3 10 0" stroke="#3a1a12" fill="none" stroke-width="1.4"/>
           <path d="M52 61q8-4 16 0" stroke="#3a1a12" fill="none" stroke-width="1.6"/>
         </svg>
-        <h3>செ.பிரபு</h3>
+        <h3 data-i18n="gH3">செ.பிரபு</h3>
         <div class="eng">Prabu. S</div>
         <div class="job">MCA., · City Union Bank, Chennai</div>
         <div class="lineage">
-          <div>பெற்றோர்: <b>திரு. நா.ப.செந்தில்குமார் – செ.பாக்கியலட்சுமி</b> அவர்களின் மூத்த குமாரன்</div>
-          <div>மகன்வழிப் பேரன்: <b>திரு. நா.பழனிச்சாமி – ப.வள்ளியம்மாள்</b>, T.சுப்புலாபுரம்</div>
-          <div>மகள்வழிப் பேரன்: <b>திரு. கா.ப.வேலுச்சாமி – வே.மாரியம்மாள்</b></div>
+          <div data-i18n="g1">பெற்றோர்: <b>திரு. நா.ப.செந்தில்குமார் – செ.பாக்கியலட்சுமி</b> அவர்களின் மூத்த குமாரன்</div>
+          <div data-i18n="g2">மகன்வழிப் பேரன்: <b>திரு. நா.பழனிச்சாமி – ப.வள்ளியம்மாள்</b>, T.சுப்புலாபுரம்</div>
+          <div data-i18n="g3">மகள்வழிப் பேரன்: <b>திரு. கா.ப.வேலுச்சாமி – வே.மாரியம்மாள்</b></div>
         </div>
       </article>
       <article class="card person reveal tilt">
         <span class="glare"></span>
-        <span class="role">மணமகள்</span>
+        <span class="role" data-i18n="roleB">மணமகள்</span>
         <svg class="avatar" viewBox="0 0 120 120" aria-hidden="true">
           <circle cx="60" cy="60" r="56" fill="#fbf0d9" stroke="#c99a3e" stroke-width="1.5"/><circle class="orbit" cx="60" cy="60" r="50" fill="none" stroke="#c99a3e" stroke-dasharray="2 4"/>
           <path d="M42 54c0-14 8-20 18-20s18 6 18 20c0 14 4 26 8 34H34c4-8 8-20 8-34z" fill="#3a1a12"/>
@@ -622,13 +640,13 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
           <g fill="#fff" stroke="#e9cf8c" stroke-width=".5"><circle cx="76" cy="44" r="2.2"/><circle cx="78" cy="49" r="2.2"/><circle cx="79" cy="54" r="2.2"/><circle cx="79" cy="59" r="2.2"/></g>
           <circle cx="47" cy="62" r="2" fill="#c99a3e"/><circle cx="73" cy="62" r="2" fill="#c99a3e"/>
         </svg>
-        <h3>ச.ரேணுகா</h3>
+        <h3 data-i18n="bH3">ச.ரேணுகா</h3>
         <div class="eng">Renuga. S</div>
         <div class="job">B.E., · Forbes Marshall Pvt Ltd, Pune</div>
         <div class="lineage">
-          <div>பெற்றோர்: <b>தெய்வத்திரு. மு.சக்கரவர்த்தி – ச.வள்ளியம்மாள்</b> அவர்களின் குமாரத்தி</div>
-          <div>மகன்வழிப் பேத்தி: <b>தெய்வத்திருவாளர்கள். R.முத்துச்சாமி – M.முனியம்மாள்</b>, சக்கம்பட்டி</div>
-          <div>மகள்வழிப் பேத்தி: <b>திரு. வை.ப.மொட்டையாண்டி – மொ.சுப்புத்தாய்</b>, தி.சுப்புலாபுரம்</div>
+          <div data-i18n="b1">பெற்றோர்: <b>தெய்வத்திரு. மு.சக்கரவர்த்தி – ச.வள்ளியம்மாள்</b> அவர்களின் குமாரத்தி</div>
+          <div data-i18n="b2">மகன்வழிப் பேத்தி: <b>தெய்வத்திருவாளர்கள். R.முத்துச்சாமி – M.முனியம்மாள்</b>, சக்கம்பட்டி</div>
+          <div data-i18n="b3">மகள்வழிப் பேத்தி: <b>திரு. வை.ப.மொட்டையாண்டி – மொ.சுப்புத்தாய்</b>, தி.சுப்புலாபுரம்</div>
         </div>
       </article>
     </div>
@@ -636,35 +654,35 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 
   <!-- ============ EVENTS ============ -->
   <section class="wrap" id="events">
-    <div class="sec-head reveal"><h2>சுப நிகழ்வுகள்</h2><p>Wedding events</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="eventsH">சுப நிகழ்வுகள்</h2><p data-i18n="eventsP">Wedding events</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="events stagger">
       <article class="card event">
         <svg class="ic"><use href="#i-mangal"/></svg>
-        <h3>பரிசம்</h3><div class="en-t">Parisam</div>
-        <div class="when"><b>Thursday, 19 Nov 2026</b>மாலை 6:00 – 7:00 மணி</div>
-        <div class="tamil-date">கார்த்திகை 3 · வியாழக்கிழமை</div>
-        <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E0%AE%AA%E0%AE%B0%E0%AE%BF%E0%AE%9A%E0%AE%AE%E0%AF%8D%20-%20Prabu%20%26%20Renuga&dates=20261119T123000Z/20261119T133000Z&details=Parisam%20-%20Prabu%20%26%20Renuga&location=T.Subbulapuram"><svg><use href="#i-cal"/></svg>Calendar-ல் சேர்க்க</a>
+        <h3 data-i18n="e1h">பரிசம்</h3><div class="en-t" data-i18n="e1t">Parisam</div>
+        <div class="when" data-i18n="e1w"><b>Thursday, 19 Nov 2026</b>மாலை 6:00 – 7:00 மணி</div>
+        <div class="tamil-date" data-i18n="e1d">கார்த்திகை 3 · வியாழக்கிழமை</div>
+        <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%E0%AE%AA%E0%AE%B0%E0%AE%BF%E0%AE%9A%E0%AE%AE%E0%AF%8D%20-%20Prabu%20%26%20Renuga&dates=20261119T123000Z/20261119T133000Z&details=Parisam%20-%20Prabu%20%26%20Renuga&location=T.Subbulapuram"><svg><use href="#i-cal"/></svg><span data-i18n="cal">Calendar-ல் சேர்க்க</span></a>
       </article>
       <article class="card event main">
         <svg class="ic"><use href="#i-kalasam"/></svg>
-        <h3>முகூர்த்தம்</h3><div class="en-t">Wedding ceremony</div>
-        <div class="when"><b>Friday, 20 Nov 2026</b>காலை 6:00 – 7:00 மணி</div>
-        <div class="tamil-date">கார்த்திகை 4 · வெள்ளிக்கிழமை</div>
-        <a class="btn gold" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding%20-%20Prabu%20%26%20Renuga&dates=20261120T003000Z/20261120T013000Z&details=Muhurtham%206%3A00-7%3A00%20AM.%20Map%3A%20https%3A%2F%2Fmaps.app.goo.gl%2FWeoopXYWyb8uhDpx8&location=Sri%20Nallathangal%20Sri%20Pappathiyammal%20Temple%20Mandapam%2C%20T.Subbulapuram"><svg><use href="#i-cal"/></svg>Calendar-ல் சேர்க்க</a>
+        <h3 data-i18n="e2h">முகூர்த்தம்</h3><div class="en-t" data-i18n="e2t">Wedding ceremony</div>
+        <div class="when" data-i18n="e2w"><b>Friday, 20 Nov 2026</b>காலை 6:00 – 7:00 மணி</div>
+        <div class="tamil-date" data-i18n="e2d">கார்த்திகை 4 · வெள்ளிக்கிழமை</div>
+        <a class="btn gold" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding%20-%20Prabu%20%26%20Renuga&dates=20261120T003000Z/20261120T013000Z&details=Muhurtham%206%3A00-7%3A00%20AM.%20Map%3A%20https%3A%2F%2Fmaps.app.goo.gl%2FWeoopXYWyb8uhDpx8&location=Sri%20Nallathangal%20Sri%20Pappathiyammal%20Temple%20Mandapam%2C%20T.Subbulapuram"><svg><use href="#i-cal"/></svg><span data-i18n="cal">Calendar-ல் சேர்க்க</span></a>
       </article>
     </div>
   </section>
 
   <!-- ============ RITUALS ============ -->
   <section class="wrap" id="rituals">
-    <div class="sec-head reveal"><h2>நம் பாரம்பரியம்</h2><p>Moments of a Tamil wedding</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="ritH">நம் பாரம்பரியம்</h2><p data-i18n="ritP">Moments of a Tamil wedding</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="rituals stagger" id="ritualList"></div>
-    <div class="swipe-hint">← பக்கவாட்டில் நகர்த்திப் பார்க்கவும் →</div>
+    <div class="swipe-hint" data-i18n="swipe">← பக்கவாட்டில் நகர்த்திப் பார்க்கவும் →</div>
   </section>
 
   <!-- ============ VENUE ============ -->
   <section class="wrap" id="venue">
-    <div class="sec-head reveal"><h2>திருமண மண்டபம்</h2><p>Venue</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="venueH">திருமண மண்டபம்</h2><p data-i18n="venueP">Venue</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="card venue reveal" id="venueCard">
       <div class="art" aria-hidden="true">
         <svg viewBox="0 0 420 300">
@@ -695,49 +713,49 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
         </svg>
       </div>
       <div class="info">
-        <h3>ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபம்</h3>
-        <div class="place">தி.சுப்புலாபுரம்</div>
-        <div class="eng">Sri Nallathangal Sri Pappathiyammal Temple Mandapam, T.Subbulapuram</div>
+        <h3 data-i18n="vH3">ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபம்</h3>
+        <div class="place" data-i18n="vPlace">தி.சுப்புலாபுரம்</div>
+        <div class="eng" data-i18n="vEng">Sri Nallathangal Sri Pappathiyammal Temple Mandapam, T.Subbulapuram</div>
         <div class="meta">
-          <div><svg><use href="#i-clock"/></svg><span>முகூர்த்தம்: 20-11-2026, காலை 6:00 – 7:00 மணி</span></div>
-          <div><svg><use href="#i-pin"/></svg><span>Google Maps-ல் direction பார்க்க கீழே உள்ள பொத்தானை அழுத்தவும்</span></div>
+          <div><svg><use href="#i-clock"/></svg><span data-i18n="vM1">முகூர்த்தம்: 20-11-2026, காலை 6:00 – 7:00 மணி</span></div>
+          <div><svg><use href="#i-pin"/></svg><span data-i18n="vM2">Google Maps-ல் direction பார்க்க கீழே உள்ள பொத்தானை அழுத்தவும்</span></div>
         </div>
-        <a class="btn solid" href="https://maps.app.goo.gl/WeoopXYWyb8uhDpx8" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>வழிகாட்டி · Get directions</a>
+        <a class="btn solid" href="https://maps.app.goo.gl/WeoopXYWyb8uhDpx8" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg><span data-i18n="dir">வழிகாட்டி · Get directions</span></a>
       </div>
     </div>
   </section>
 
   <!-- ============ PRESIDING ============ -->
   <section class="wrap" id="presiding">
-    <div class="sec-head reveal"><h2>தலைமை &amp; முன்னிலை</h2><p>Presided over by</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="presH">தலைமை &amp; முன்னிலை</h2><p data-i18n="presP">Presided over by</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="presiding stagger">
-      <div class="card vip"><span class="lbl">தலைமை</span><h4>உயர்திரு. S.M.P.மாரிமுத்து M.A.,</h4><p>சாலியர் மகாஜன சங்கம்,<br>தமிழ்நாடு மாநில துணைத் தலைவர்</p></div>
-      <div class="card vip"><span class="lbl">முன்னிலை</span><h4>உயர்திரு. C.முத்தையா</h4><p>M.P.டெக்ஸ் தொழிலதிபர்</p></div>
-      <div class="card vip"><span class="lbl">முன்னிலை</span><h4>உயர்திரு. நா.பழனிச்சாமி</h4><p>P.V.K. Silks</p></div>
+      <div class="card vip"><span class="lbl" data-i18n="lblHead">தலைமை</span><h4 data-i18n="vip1h">உயர்திரு. S.M.P.மாரிமுத்து M.A.,</h4><p data-i18n="vip1p">சாலியர் மகாஜன சங்கம்,<br>தமிழ்நாடு மாநில துணைத் தலைவர்</p></div>
+      <div class="card vip"><span class="lbl" data-i18n="lblPres">முன்னிலை</span><h4 data-i18n="vip2h">உயர்திரு. C.முத்தையா</h4><p data-i18n="vip2p">M.P.டெக்ஸ் தொழிலதிபர்</p></div>
+      <div class="card vip"><span class="lbl" data-i18n="lblPres">முன்னிலை</span><h4 data-i18n="vip3h">உயர்திரு. நா.பழனிச்சாமி</h4><p>P.V.K. Silks</p></div>
     </div>
   </section>
 
   <!-- ============ FAMILY ============ -->
   <section class="wrap" id="family">
-    <div class="sec-head reveal"><h2>இருவீட்டார் அழைப்பு</h2><p>With love from our families</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="famH">இருவீட்டார் அழைப்பு</h2><p data-i18n="famP">With love from our families</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="tabs reveal" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-p="p-inv">அழைப்பவர்கள்</button>
-      <button class="tab" role="tab" aria-selected="false" data-p="p-groom">மணமகன் உறவினர்கள்</button>
-      <button class="tab" role="tab" aria-selected="false" data-p="p-bride">மணமகள் உறவினர்கள்</button>
+      <button class="tab" role="tab" aria-selected="true" data-p="p-inv" data-i18n="tab1">அழைப்பவர்கள்</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p-groom" data-i18n="tab2">மணமகன் உறவினர்கள்</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="p-bride" data-i18n="tab3">மணமகள் உறவினர்கள்</button>
     </div>
     <div class="card reveal">
       <div class="panel on" id="p-inv" role="tabpanel">
         <div class="inviters">
           <div>
-            <div class="side-t">தங்களன்புள்ள, <small style="color:var(--muted);font-weight:400">(மணமகன் வீட்டார்)</small></div>
+            <div class="side-t" data-i18n="sideG">தங்களன்புள்ள, <small style="color:var(--muted);font-weight:400">(மணமகன் வீட்டார்)</small></div>
             <div id="inv-groom"></div>
-            <div class="phone">தி.சுப்புலாபுரம் · செல்: <a href="tel:+919843383439">98433 83439</a></div>
+            <div class="phone"><span data-i18n="cell">தி.சுப்புலாபுரம் · செல்: </span><a href="tel:+919843383439">98433 83439</a></div>
           </div>
           <div>
-            <div class="side-t">அவ்வண்ணமே கோரும், <small style="color:var(--muted);font-weight:400">(மணமகள் வீட்டார்)</small></div>
-            <div class="rel"><span class="who"><b>தெய்வத்திரு. மு.சக்கரவர்த்தி</b></span></div>
-            <div class="rel"><span class="who"><b>ச.வள்ளியம்மாள்</b></span></div>
-            <div class="phone">தி.சுப்புலாபுரம் · செல்: <a href="tel:+919585621362">95856 21362</a></div>
+            <div class="side-t" data-i18n="sideB">அவ்வண்ணமே கோரும், <small style="color:var(--muted);font-weight:400">(மணமகள் வீட்டார்)</small></div>
+            <div class="rel"><span class="who"><b data-i18n="bF">தெய்வத்திரு. மு.சக்கரவர்த்தி</b></span></div>
+            <div class="rel"><span class="who"><b data-i18n="bM">ச.வள்ளியம்மாள்</b></span></div>
+            <div class="phone"><span data-i18n="cell">தி.சுப்புலாபுரம் · செல்: </span><a href="tel:+919585621362">95856 21362</a></div>
           </div>
         </div>
       </div>
@@ -749,8 +767,8 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   <!-- ============ BLESSING ============ -->
   <section class="wrap" id="bless">
     <div class="card bless reveal">
-      <h3>அட்சதை தூவி ஆசீர்வதியுங்கள்</h3>
-      <p>நேரில் வர முடிந்தாலும் முடியாவிட்டாலும், இங்கிருந்தே மணமக்களுக்கு உங்கள் ஆசியை அனுப்புங்கள்.</p>
+      <h3 data-i18n="blH">அட்சதை தூவி ஆசீர்வதியுங்கள்</h3>
+      <p data-i18n="blP">நேரில் வர முடிந்தாலும் முடியாவிட்டாலும், இங்கிருந்தே மணமக்களுக்கு உங்கள் ஆசியை அனுப்புங்கள்.</p>
       <svg class="plate" id="plate" viewBox="0 0 150 110" aria-hidden="true">
         <ellipse cx="75" cy="80" rx="68" ry="20" fill="url(#g-gold)" stroke="#8a6420"/>
         <ellipse cx="75" cy="76" rx="56" ry="14" fill="#f4dc9a" stroke="#c99a3e"/>
@@ -758,59 +776,59 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
         <g fill="#f29b18" stroke="#d07a0c" stroke-width=".8"><circle cx="40" cy="70" r="7"/><circle cx="112" cy="70" r="7"/></g>
         <g fill="#e0485f"><circle cx="40" cy="70" r="2.4"/><circle cx="112" cy="70" r="2.4"/></g>
       </svg>
-      <button class="btn-bless" id="blessBtn" type="button">🌼 அட்சதை தூவ</button>
+      <button class="btn-bless" id="blessBtn" type="button" data-i18n="blBtn">🌼 அட்சதை தூவ</button>
       <div class="count" id="blessCount"></div>
     </div>
   </section>
 
   <!-- ============ WISHES ============ -->
   <section class="wrap" id="wishes">
-    <div class="sec-head reveal"><h2>வாழ்த்து அனுப்புங்கள்</h2><p>Send your wishes to the couple</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="wishH">வாழ்த்து அனுப்புங்கள்</h2><p data-i18n="wishP">Send your wishes to the couple</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="card wish reveal">
       <form id="wishForm" novalidate>
-        <div class="field"><label for="w-name">உங்கள் பெயர் · Your name</label><input id="w-name" autocomplete="name" placeholder="எ.கா. ரமேஷ் குமார்"></div>
-        <div class="field"><label for="w-msg">மணமக்களுக்கு உங்கள் வாழ்த்து</label><textarea id="w-msg" rows="3" placeholder="நீடூழி வாழ்க! பதினாறும் பெற்று பெருவாழ்வு வாழ்க…"></textarea></div>
+        <div class="field"><label for="w-name" data-i18n="wName">உங்கள் பெயர் · Your name</label><input id="w-name" autocomplete="name" placeholder="எ.கா. ரமேஷ் குமார்" data-i18n-ph="phName"></div>
+        <div class="field"><label for="w-msg" data-i18n="wMsg">மணமக்களுக்கு உங்கள் வாழ்த்து</label><textarea id="w-msg" rows="3" placeholder="நீடூழி வாழ்க! பதினாறும் பெற்று பெருவாழ்வு வாழ்க…" data-i18n-ph="phMsg"></textarea></div>
         <div class="err" id="err"></div>
-        <button class="btn solid" type="submit" style="font-size:1rem;padding:11px 26px">🙏 வாழ்த்து அனுப்ப</button>
+        <button class="btn solid" type="submit" style="font-size:1rem;padding:11px 26px" data-i18n="wSend">🙏 வாழ்த்து அனுப்ப</button>
       </form>
       <div class="result" id="result">
         <h3 id="resTitle">நன்றி!</h3>
-        <p>உங்கள் வாழ்த்தை WhatsApp-ல் அனுப்ப, எந்த வீட்டாருக்கு என்று தேர்வு செய்யவும்:</p>
-        <a class="wa" id="waG" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>மணமகன் வீடு</a>
-        <a class="wa" id="waB" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>மணமகள் வீடு</a>
-        <p class="note">WhatsApp திறக்கவில்லை என்றால்: மணமகன் வீடு 98433 83439 · மணமகள் வீடு 95856 21362</p>
-        <button class="btn" type="button" id="again">இன்னொரு வாழ்த்து</button>
+        <p data-i18n="wPick">உங்கள் வாழ்த்தை WhatsApp-ல் அனுப்ப, எந்த வீட்டாருக்கு என்று தேர்வு செய்யவும்:</p>
+        <a class="wa" id="waG" href="#" target="_blank" rel="noopener" data-i18n="waG"><svg><use href="#i-wa"/></svg>மணமகன் வீடு</a>
+        <a class="wa" id="waB" href="#" target="_blank" rel="noopener" data-i18n="waB"><svg><use href="#i-wa"/></svg>மணமகள் வீடு</a>
+        <p class="note" data-i18n="wNote">WhatsApp திறக்கவில்லை என்றால்: மணமகன் வீடு 98433 83439 · மணமகள் வீடு 95856 21362</p>
+        <button class="btn" type="button" id="again" data-i18n="again">இன்னொரு வாழ்த்து</button>
       </div>
     </div>
   </section>
 
   <!-- ============ LINK MAKER ============ -->
   <section class="wrap" id="sendlink">
-    <div class="sec-head reveal"><h2>QR &amp; தனிப்பட்ட அழைப்பு</h2><p>QR code &amp; personal invite links · for the family</p><svg class="divider"><use href="#i-divider"/></svg></div>
+    <div class="sec-head reveal"><h2 data-i18n="qrhH">QR &amp; தனிப்பட்ட அழைப்பு</h2><p data-i18n="qrhP">QR code &amp; personal invite links · for the family</p><svg class="divider"><use href="#i-divider"/></svg></div>
     <div class="card qrcard reveal">
       <div class="qrbox"><svg class="qrsvg" role="img" aria-label="அழைப்பிதழ் QR code" viewBox="-3 -3 47 47" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
 <rect x="-3" y="-3" width="47" height="47" fill="#fffaf0"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM14 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM31 0h1v1h-1zM32 0h1v1h-1zM34 0h1v1h-1zM35 0h1v1h-1zM36 0h1v1h-1zM37 0h1v1h-1zM38 0h1v1h-1zM39 0h1v1h-1zM40 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM16 1h1v1h-1zM19 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM24 1h1v1h-1zM25 1h1v1h-1zM26 1h1v1h-1zM27 1h1v1h-1zM28 1h1v1h-1zM30 1h1v1h-1zM34 1h1v1h-1zM40 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM11 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM22 2h1v1h-1zM23 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM27 2h1v1h-1zM31 2h1v1h-1zM32 2h1v1h-1zM34 2h1v1h-1zM36 2h1v1h-1zM37 2h1v1h-1zM38 2h1v1h-1zM40 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM12 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM23 3h1v1h-1zM24 3h1v1h-1zM26 3h1v1h-1zM27 3h1v1h-1zM30 3h1v1h-1zM31 3h1v1h-1zM34 3h1v1h-1zM36 3h1v1h-1zM37 3h1v1h-1zM38 3h1v1h-1zM40 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM19 4h1v1h-1zM21 4h1v1h-1zM23 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM27 4h1v1h-1zM28 4h1v1h-1zM31 4h1v1h-1zM32 4h1v1h-1zM34 4h1v1h-1zM36 4h1v1h-1zM37 4h1v1h-1zM38 4h1v1h-1zM40 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM22 5h1v1h-1zM25 5h1v1h-1zM27 5h1v1h-1zM28 5h1v1h-1zM29 5h1v1h-1zM30 5h1v1h-1zM34 5h1v1h-1zM40 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM32 6h1v1h-1zM34 6h1v1h-1zM35 6h1v1h-1zM36 6h1v1h-1zM37 6h1v1h-1zM38 6h1v1h-1zM39 6h1v1h-1zM40 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM18 7h1v1h-1zM22 7h1v1h-1zM23 7h1v1h-1zM24 7h1v1h-1zM25 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM31 7h1v1h-1zM32 7h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM29 8h1v1h-1zM33 8h1v1h-1zM34 8h1v1h-1zM35 8h1v1h-1zM38 8h1v1h-1zM39 8h1v1h-1zM40 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM28 9h1v1h-1zM30 9h1v1h-1zM31 9h1v1h-1zM32 9h1v1h-1zM33 9h1v1h-1zM35 9h1v1h-1zM36 9h1v1h-1zM38 9h1v1h-1zM40 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM14 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM30 10h1v1h-1zM32 10h1v1h-1zM33 10h1v1h-1zM34 10h1v1h-1zM36 10h1v1h-1zM39 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM5 11h1v1h-1zM8 11h1v1h-1zM10 11h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM22 11h1v1h-1zM24 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM31 11h1v1h-1zM32 11h1v1h-1zM36 11h1v1h-1zM37 11h1v1h-1zM2 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM11 12h1v1h-1zM12 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM26 12h1v1h-1zM27 12h1v1h-1zM28 12h1v1h-1zM29 12h1v1h-1zM31 12h1v1h-1zM33 12h1v1h-1zM35 12h1v1h-1zM37 12h1v1h-1zM38 12h1v1h-1zM39 12h1v1h-1zM40 12h1v1h-1zM0 13h1v1h-1zM1 13h1v1h-1zM2 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM30 13h1v1h-1zM32 13h1v1h-1zM33 13h1v1h-1zM35 13h1v1h-1zM36 13h1v1h-1zM39 13h1v1h-1zM40 13h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM11 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM24 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM29 14h1v1h-1zM30 14h1v1h-1zM31 14h1v1h-1zM33 14h1v1h-1zM35 14h1v1h-1zM36 14h1v1h-1zM37 14h1v1h-1zM2 15h1v1h-1zM8 15h1v1h-1zM9 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM20 15h1v1h-1zM23 15h1v1h-1zM26 15h1v1h-1zM27 15h1v1h-1zM31 15h1v1h-1zM32 15h1v1h-1zM34 15h1v1h-1zM36 15h1v1h-1zM37 15h1v1h-1zM39 15h1v1h-1zM1 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM10 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM24 16h1v1h-1zM26 16h1v1h-1zM27 16h1v1h-1zM31 16h1v1h-1zM33 16h1v1h-1zM35 16h1v1h-1zM38 16h1v1h-1zM39 16h1v1h-1zM40 16h1v1h-1zM1 17h1v1h-1zM5 17h1v1h-1zM7 17h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM25 17h1v1h-1zM28 17h1v1h-1zM29 17h1v1h-1zM30 17h1v1h-1zM32 17h1v1h-1zM34 17h1v1h-1zM35 17h1v1h-1zM36 17h1v1h-1zM37 17h1v1h-1zM39 17h1v1h-1zM40 17h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM26 18h1v1h-1zM27 18h1v1h-1zM29 18h1v1h-1zM32 18h1v1h-1zM33 18h1v1h-1zM36 18h1v1h-1zM37 18h1v1h-1zM38 18h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM4 19h1v1h-1zM7 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM27 19h1v1h-1zM28 19h1v1h-1zM29 19h1v1h-1zM30 19h1v1h-1zM32 19h1v1h-1zM33 19h1v1h-1zM34 19h1v1h-1zM36 19h1v1h-1zM37 19h1v1h-1zM39 19h1v1h-1zM40 19h1v1h-1zM0 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM10 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM26 20h1v1h-1zM27 20h1v1h-1zM28 20h1v1h-1zM35 20h1v1h-1zM36 20h1v1h-1zM37 20h1v1h-1zM40 20h1v1h-1zM0 21h1v1h-1zM1 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM7 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM22 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM29 21h1v1h-1zM30 21h1v1h-1zM31 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM35 21h1v1h-1zM36 21h1v1h-1zM39 21h1v1h-1zM40 21h1v1h-1zM1 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM7 22h1v1h-1zM9 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM18 22h1v1h-1zM21 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM27 22h1v1h-1zM28 22h1v1h-1zM32 22h1v1h-1zM33 22h1v1h-1zM35 22h1v1h-1zM37 22h1v1h-1zM38 22h1v1h-1zM0 23h1v1h-1zM1 23h1v1h-1zM4 23h1v1h-1zM8 23h1v1h-1zM9 23h1v1h-1zM20 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM28 23h1v1h-1zM30 23h1v1h-1zM35 23h1v1h-1zM36 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM7 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM12 24h1v1h-1zM15 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM26 24h1v1h-1zM29 24h1v1h-1zM31 24h1v1h-1zM33 24h1v1h-1zM35 24h1v1h-1zM36 24h1v1h-1zM37 24h1v1h-1zM38 24h1v1h-1zM39 24h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM7 25h1v1h-1zM8 25h1v1h-1zM9 25h1v1h-1zM11 25h1v1h-1zM14 25h1v1h-1zM17 25h1v1h-1zM19 25h1v1h-1zM21 25h1v1h-1zM24 25h1v1h-1zM26 25h1v1h-1zM28 25h1v1h-1zM30 25h1v1h-1zM31 25h1v1h-1zM34 25h1v1h-1zM35 25h1v1h-1zM36 25h1v1h-1zM37 25h1v1h-1zM40 25h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM7 26h1v1h-1zM9 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM14 26h1v1h-1zM15 26h1v1h-1zM17 26h1v1h-1zM20 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM27 26h1v1h-1zM28 26h1v1h-1zM29 26h1v1h-1zM30 26h1v1h-1zM32 26h1v1h-1zM34 26h1v1h-1zM0 27h1v1h-1zM2 27h1v1h-1zM7 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM18 27h1v1h-1zM19 27h1v1h-1zM21 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM28 27h1v1h-1zM31 27h1v1h-1zM32 27h1v1h-1zM33 27h1v1h-1zM34 27h1v1h-1zM35 27h1v1h-1zM36 27h1v1h-1zM37 27h1v1h-1zM39 27h1v1h-1zM40 27h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM13 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM27 28h1v1h-1zM29 28h1v1h-1zM31 28h1v1h-1zM32 28h1v1h-1zM34 28h1v1h-1zM37 28h1v1h-1zM38 28h1v1h-1zM39 28h1v1h-1zM0 29h1v1h-1zM1 29h1v1h-1zM3 29h1v1h-1zM9 29h1v1h-1zM11 29h1v1h-1zM12 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM17 29h1v1h-1zM18 29h1v1h-1zM20 29h1v1h-1zM22 29h1v1h-1zM24 29h1v1h-1zM25 29h1v1h-1zM26 29h1v1h-1zM27 29h1v1h-1zM28 29h1v1h-1zM33 29h1v1h-1zM35 29h1v1h-1zM36 29h1v1h-1zM38 29h1v1h-1zM40 29h1v1h-1zM0 30h1v1h-1zM2 30h1v1h-1zM5 30h1v1h-1zM6 30h1v1h-1zM7 30h1v1h-1zM8 30h1v1h-1zM10 30h1v1h-1zM14 30h1v1h-1zM15 30h1v1h-1zM16 30h1v1h-1zM18 30h1v1h-1zM20 30h1v1h-1zM21 30h1v1h-1zM22 30h1v1h-1zM25 30h1v1h-1zM32 30h1v1h-1zM33 30h1v1h-1zM34 30h1v1h-1zM35 30h1v1h-1zM37 30h1v1h-1zM0 31h1v1h-1zM2 31h1v1h-1zM3 31h1v1h-1zM4 31h1v1h-1zM5 31h1v1h-1zM7 31h1v1h-1zM8 31h1v1h-1zM9 31h1v1h-1zM10 31h1v1h-1zM11 31h1v1h-1zM14 31h1v1h-1zM16 31h1v1h-1zM19 31h1v1h-1zM20 31h1v1h-1zM22 31h1v1h-1zM24 31h1v1h-1zM26 31h1v1h-1zM28 31h1v1h-1zM33 31h1v1h-1zM34 31h1v1h-1zM35 31h1v1h-1zM0 32h1v1h-1zM3 32h1v1h-1zM4 32h1v1h-1zM6 32h1v1h-1zM8 32h1v1h-1zM9 32h1v1h-1zM10 32h1v1h-1zM14 32h1v1h-1zM15 32h1v1h-1zM17 32h1v1h-1zM20 32h1v1h-1zM21 32h1v1h-1zM24 32h1v1h-1zM29 32h1v1h-1zM32 32h1v1h-1zM33 32h1v1h-1zM34 32h1v1h-1zM35 32h1v1h-1zM36 32h1v1h-1zM38 32h1v1h-1zM40 32h1v1h-1zM8 33h1v1h-1zM9 33h1v1h-1zM10 33h1v1h-1zM13 33h1v1h-1zM15 33h1v1h-1zM20 33h1v1h-1zM23 33h1v1h-1zM24 33h1v1h-1zM25 33h1v1h-1zM26 33h1v1h-1zM27 33h1v1h-1zM28 33h1v1h-1zM32 33h1v1h-1zM36 33h1v1h-1zM37 33h1v1h-1zM39 33h1v1h-1zM40 33h1v1h-1zM0 34h1v1h-1zM1 34h1v1h-1zM2 34h1v1h-1zM3 34h1v1h-1zM4 34h1v1h-1zM5 34h1v1h-1zM6 34h1v1h-1zM10 34h1v1h-1zM12 34h1v1h-1zM18 34h1v1h-1zM19 34h1v1h-1zM21 34h1v1h-1zM23 34h1v1h-1zM24 34h1v1h-1zM27 34h1v1h-1zM30 34h1v1h-1zM31 34h1v1h-1zM32 34h1v1h-1zM34 34h1v1h-1zM36 34h1v1h-1zM38 34h1v1h-1zM39 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h1v1h-1zM10 35h1v1h-1zM12 35h1v1h-1zM13 35h1v1h-1zM17 35h1v1h-1zM19 35h1v1h-1zM21 35h1v1h-1zM22 35h1v1h-1zM23 35h1v1h-1zM24 35h1v1h-1zM26 35h1v1h-1zM27 35h1v1h-1zM31 35h1v1h-1zM32 35h1v1h-1zM36 35h1v1h-1zM37 35h1v1h-1zM0 36h1v1h-1zM2 36h1v1h-1zM3 36h1v1h-1zM4 36h1v1h-1zM6 36h1v1h-1zM8 36h1v1h-1zM9 36h1v1h-1zM11 36h1v1h-1zM14 36h1v1h-1zM15 36h1v1h-1zM16 36h1v1h-1zM17 36h1v1h-1zM18 36h1v1h-1zM19 36h1v1h-1zM20 36h1v1h-1zM23 36h1v1h-1zM24 36h1v1h-1zM26 36h1v1h-1zM27 36h1v1h-1zM30 36h1v1h-1zM32 36h1v1h-1zM33 36h1v1h-1zM34 36h1v1h-1zM35 36h1v1h-1zM36 36h1v1h-1zM37 36h1v1h-1zM38 36h1v1h-1zM0 37h1v1h-1zM2 37h1v1h-1zM3 37h1v1h-1zM4 37h1v1h-1zM6 37h1v1h-1zM8 37h1v1h-1zM9 37h1v1h-1zM10 37h1v1h-1zM11 37h1v1h-1zM12 37h1v1h-1zM13 37h1v1h-1zM14 37h1v1h-1zM16 37h1v1h-1zM18 37h1v1h-1zM19 37h1v1h-1zM22 37h1v1h-1zM31 37h1v1h-1zM33 37h1v1h-1zM35 37h1v1h-1zM40 37h1v1h-1zM0 38h1v1h-1zM2 38h1v1h-1zM3 38h1v1h-1zM4 38h1v1h-1zM6 38h1v1h-1zM8 38h1v1h-1zM10 38h1v1h-1zM13 38h1v1h-1zM16 38h1v1h-1zM19 38h1v1h-1zM24 38h1v1h-1zM26 38h1v1h-1zM27 38h1v1h-1zM30 38h1v1h-1zM32 38h1v1h-1zM33 38h1v1h-1zM34 38h1v1h-1zM35 38h1v1h-1zM36 38h1v1h-1zM37 38h1v1h-1zM38 38h1v1h-1zM39 38h1v1h-1zM0 39h1v1h-1zM6 39h1v1h-1zM9 39h1v1h-1zM10 39h1v1h-1zM12 39h1v1h-1zM14 39h1v1h-1zM15 39h1v1h-1zM16 39h1v1h-1zM17 39h1v1h-1zM19 39h1v1h-1zM22 39h1v1h-1zM23 39h1v1h-1zM24 39h1v1h-1zM25 39h1v1h-1zM27 39h1v1h-1zM28 39h1v1h-1zM32 39h1v1h-1zM36 39h1v1h-1zM37 39h1v1h-1zM39 39h1v1h-1zM0 40h1v1h-1zM1 40h1v1h-1zM2 40h1v1h-1zM3 40h1v1h-1zM4 40h1v1h-1zM5 40h1v1h-1zM6 40h1v1h-1zM9 40h1v1h-1zM10 40h1v1h-1zM11 40h1v1h-1zM12 40h1v1h-1zM13 40h1v1h-1zM14 40h1v1h-1zM15 40h1v1h-1zM17 40h1v1h-1zM19 40h1v1h-1zM22 40h1v1h-1zM24 40h1v1h-1zM25 40h1v1h-1zM27 40h1v1h-1zM28 40h1v1h-1zM29 40h1v1h-1zM31 40h1v1h-1zM33 40h1v1h-1zM35 40h1v1h-1zM36 40h1v1h-1zM37 40h1v1h-1zM38 40h1v1h-1z" fill="#5a0f1b"/>
 <rect x="16.0" y="16.0" width="9" height="9" rx="1.6" fill="#fffaf0" stroke="#c99a3e" stroke-width=".35" shape-rendering="geometricPrecision"/>
 <text x="20.5" y="22.4" text-anchor="middle" font-family="Great Vibes, cursive" font-size="4.3" fill="#6e1423" shape-rendering="geometricPrecision">P&amp;R</text></svg></div>
       <div>
-        <h3>அழைப்பிதழ் QR Code</h3>
-        <p>அச்சிட்ட பத்திரிகையில் இந்த QR-ஐ வைக்கலாம். Scan செய்தவுடன் இந்த அழைப்பிதழ் திறக்கும்.</p>
+        <h3 data-i18n="qrH3">அழைப்பிதழ் QR Code</h3>
+        <p data-i18n="qrP">அச்சிட்ட பத்திரிகையில் இந்த QR-ஐ வைக்கலாம். Scan செய்தவுடன் இந்த அழைப்பிதழ் திறக்கும்.</p>
         <div class="url">claude.ai/artifact/7MxgVvPA9eNsEpDaRy33wY</div>
       </div>
     </div>
     <div class="card maker reveal">
-      <div class="field" style="margin-bottom:6px"><label for="lk-name">விருந்தினர் பெயர் (English-ல்)</label>
-        <div class="row"><input id="lk-name" placeholder="e.g. Ramesh Kumar" autocomplete="off"><button class="btn solid" style="margin-top:0" id="lk-make" type="button">Link உருவாக்க</button></div>
+      <div class="field" style="margin-bottom:6px"><label for="lk-name" data-i18n="lkL">விருந்தினர் பெயர் (English-ல்)</label>
+        <div class="row"><input id="lk-name" placeholder="e.g. Ramesh Kumar" autocomplete="off"><button class="btn solid" style="margin-top:0" id="lk-make" type="button" data-i18n="lkMake">Link உருவாக்க</button></div>
       </div>
-      <div class="note" style="margin-top:0">அந்த link-ஐ திறக்கும்போது “உயர்திரு. Ramesh Kumar அவர்களுக்கு” என்று அவர்களின் பெயருடன் அழைப்பிதழ் திறக்கும்.</div>
+      <div class="note" style="margin-top:0" data-i18n="lkNote">அந்த link-ஐ திறக்கும்போது “உயர்திரு. Ramesh Kumar அவர்களுக்கு” என்று அவர்களின் பெயருடன் அழைப்பிதழ் திறக்கும்.</div>
       <div class="linkbox" id="lk-box">
         <div id="lk-url"></div>
         <div class="acts">
           <button class="btn" type="button" id="lk-copy"><svg><use href="#i-copy"/></svg>Copy</button>
-          <a class="btn" id="lk-wa" target="_blank" rel="noopener" href="#"><svg><use href="#i-wa"/></svg>WhatsApp-ல் அனுப்ப</a>
+          <a class="btn" id="lk-wa" target="_blank" rel="noopener" href="#" data-i18n="lkWa"><svg><use href="#i-wa"/></svg>WhatsApp-ல் அனுப்ப</a>
         </div>
         <div class="gqr" id="gqr"><div id="gqrIn"></div><span class="lg">P&amp;R</span></div>
-        <div class="gqr-note" id="gqrNote">இந்த விருந்தினருக்கான தனி QR · screenshot எடுத்து அனுப்பலாம்</div>
+        <div class="gqr-note" id="gqrNote" data-i18n="gqrNote">இந்த விருந்தினருக்கான தனி QR · screenshot எடுத்து அனுப்பலாம்</div>
       </div>
     </div>
   </section>
@@ -818,15 +836,15 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 
 <footer>
   <svg class="kal" aria-hidden="true"><use href="#i-kalasam"/></svg>
-  <div class="welcome">தங்கள் வருகையை அன்புடன் விரும்பும்</div>
-  <div class="lines">இல்லம் நிறைந்த உறவுகளும்<br>உள்ளம் நிறைந்த நட்புகளும்</div>
+  <div class="welcome" data-i18n="fWel">தங்கள் வருகையை அன்புடன் விரும்பும்</div>
+  <div class="lines" data-i18n="fLines">இல்லம் நிறைந்த உறவுகளும்<br>உள்ளம் நிறைந்த நட்புகளும்</div>
   <div class="sig">With love, Prabu &amp; Renuga</div>
   <div class="actions">
-    <a class="btn gold" id="shareWa" target="_blank" rel="noopener" href="#"><svg><use href="#i-wa"/></svg>அழைப்பிதழைப் பகிர</a>
+    <a class="btn gold" id="shareWa" target="_blank" rel="noopener" href="#" data-i18n="fShare"><svg><use href="#i-wa"/></svg>அழைப்பிதழைப் பகிர</a>
     <a class="btn gold" href="https://maps.app.goo.gl/WeoopXYWyb8uhDpx8" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Location</a>
-    <a class="btn gold" href="#top"><span aria-hidden="true">↑</span> மேலே</a>
+    <a class="btn gold" href="#top"><span aria-hidden="true">↑</span> <span data-i18n="top">மேலே</span></a>
   </div>
-  <div class="tiny">வாழ்க வளர்க உயர்க</div>
+  <div class="tiny" data-i18n="fTiny">வாழ்க வளர்க உயர்க</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -844,6 +862,14 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   const $=id=>document.getElementById(id);
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  /* ================= LANGUAGE (தமிழ் / English) ================= */
+  const EN_TEXT={"coverSub": "Auspicious Wedding Invitation", "coverTitle": "Wedding<br>Invitation", "openBtn": "Open the temple doors<small>Tap to open</small>", "hint": "🔊 With auspicious wedding music", "scTop": "A sweet surprise for you<small>உங்களுக்கு ஒரு இனிய செய்தி</small>", "scK1": "Auspicious Muhurtham", "scDay": "Friday<br>6:00 – 7:00 AM", "scGo": "View the invitation →", "blessing": "With the blessings of Arulmigu Sri Nagammal · Sri Murugan · Sri Gowmariamman<br>Sri Kalusalingam · Sri Jakkammal", "h1": "Wedding Invitation", "gTa": "S. Prabu<span class=\"deg\">MCA.,</span>", "bTa": "S. Renuga<span class=\"deg\">B.E.,</span>", "dateTa": "Karthigai 4 · Friday · 6:00 – 7:00 AM", "today": "🪔 Today is the wedding day! 🪔", "cdD": "Days", "cdH": "Hours", "cdM": "Minutes", "cdS": "Seconds", "scrollCue": "Scroll down<i></i>", "salute": "Dear Sir / Madam,", "words1": "By the grace of God, on the auspicious day of Friday, the 4th of Karthigai in the Sri Parabhava year (20 November 2026), with Ekadasi thithi, Uthirattathi star, Siddha yogam, Shukla paksha and Shukra horai,", "muh": "between 6:00 AM and 7:00 AM", "words2": "the wedding of Chi. S. Prabu, MCA., and Sow. S. Renuga, B.E., as arranged by our elders, will take place at Sri Nallathangal Sri Pappathiyammal Temple Mandapam, T. Subbulapuram. We cordially invite you, with your family and friends, to grace the occasion and bless the couple.", "coupleH": "The Bride &amp; Groom", "coupleP": "மணமக்கள்", "eventsH": "Wedding Events", "eventsP": "சுப நிகழ்வுகள்", "ritH": "Our Traditions", "ritP": "நம் பாரம்பரியம்", "venueH": "Wedding Venue", "venueP": "திருமண மண்டபம்", "presH": "Presided Over By", "presP": "தலைமை &amp; முன்னிலை", "famH": "Invitation from Both Families", "famP": "இருவீட்டார் அழைப்பு", "wishH": "Send Your Wishes", "wishP": "வாழ்த்து அனுப்புங்கள்", "qrhH": "QR Code &amp; Personal Invites", "qrhP": "QR &amp; தனிப்பட்ட அழைப்பு", "roleG": "The Groom", "roleB": "The Bride", "gH3": "S. Prabu", "bH3": "S. Renuga", "g1": "Parents: <b>Mr. N.P. Senthilkumar – Mrs. S. Bakkiyalakshmi</b> (elder son)", "g2": "Paternal grandparents: <b>Mr. N. Palanichamy – Mrs. P. Valliammal</b>, T. Subbulapuram", "g3": "Maternal grandparents: <b>Mr. K.P. Veluchamy – Mrs. V. Mariammal</b>", "b1": "Parents: <b>Late M. Chakkaravarthy – Mrs. S. Valliammal</b> (daughter)", "b2": "Paternal grandparents: <b>Late R. Muthuchamy – Late M. Muniammal</b>, Chakkampatti", "b3": "Maternal grandparents: <b>Mr. V.P. Mottaiyandi – Mrs. M. Subbuthai</b>, T. Subbulapuram", "e1h": "Parisam", "e1t": "பரிசம்", "e1w": "<b>Thursday, 19 Nov 2026</b>6:00 – 7:00 PM", "e1d": "Karthigai 3 · Thursday", "e2h": "Muhurtham", "e2t": "முகூர்த்தம் · Wedding ceremony", "e2w": "<b>Friday, 20 Nov 2026</b>6:00 – 7:00 AM", "e2d": "Karthigai 4 · Friday", "swipe": "← Swipe to see more →", "vH3": "Sri Nallathangal Sri Pappathiyammal Temple Mandapam", "vPlace": "T. Subbulapuram", "vEng": "ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபம், தி.சுப்புலாபுரம்", "vM1": "Muhurtham: 20-11-2026, 6:00 – 7:00 AM", "vM2": "Tap the button below for directions on Google Maps", "vip1p": "State Vice President,<br>Saliyar Mahajana Sangam, Tamil Nadu", "vip1h": "Mr. S.M.P. Marimuthu, M.A.", "vip2h": "Mr. C. Muthiah", "vip2p": "Industrialist, M.P. Tex", "vip3h": "Mr. N. Palanichamy", "tab1": "Hosts", "tab2": "Groom's family", "tab3": "Bride's family", "sideG": "With warm regards, <small style=\"color:var(--muted);font-weight:400\">(Groom's family)</small>", "sideB": "Awaiting your presence, <small style=\"color:var(--muted);font-weight:400\">(Bride's family)</small>", "blH": "Shower Akshathai &amp; Bless the Couple", "blP": "Whether or not you can attend in person, send your blessings to the couple from right here.", "blBtn": "🌼 Shower akshathai", "wName": "Your name · உங்கள் பெயர்", "wMsg": "Your wishes for the couple", "wSend": "🙏 Send wishes", "wPick": "To send your wishes on WhatsApp, choose a family:", "waG": "<svg><use href=\"#i-wa\"/></svg>Groom's family", "waB": "<svg><use href=\"#i-wa\"/></svg>Bride's family", "wNote": "If WhatsApp doesn't open, call: Groom's family 98433 83439 · Bride's family 95856 21362", "again": "Send another wish", "qrH3": "Invitation QR Code", "qrP": "Print this QR on the paper invitation. Scanning it opens this invitation.", "lkL": "Guest's name (in English)", "lkMake": "Create link", "lkNote": "When opened, the invitation greets the guest by name: “Dear Ramesh Kumar”.", "lkWa": "<svg><use href=\"#i-wa\"/></svg>Send on WhatsApp", "gqrNote": "Personal QR for this guest · take a screenshot to share", "fWel": "We eagerly await your presence", "fLines": "With relatives who fill our home<br>and friends who fill our hearts", "fShare": "<svg><use href=\"#i-wa\"/></svg>Share invitation", "fTiny": "Live long, grow and prosper", "cal": "Add to calendar", "lblHead": "Presided by", "lblPres": "In the presence of", "cell": "T. Subbulapuram · Cell: ", "bF": "Late M. Chakkaravarthy", "bM": "Mrs. S. Valliammal", "dir": "Get directions · வழிகாட்டி", "top": "Top", "phName": "e.g. Ramesh Kumar", "phMsg": "Wishing you a long and happy married life…"};
+  let LANG=(store.get('pr-lang')==='en')?'en':'ta';
+  const T=(ta,en)=>LANG==='en'?en:ta;
+  const TA_TEXT={};
+  document.querySelectorAll('[data-i18n]').forEach((el,i)=>{el.dataset.i18nId=i;TA_TEXT[i]=el.classList.contains('words')?el.textContent.trim():el.innerHTML;});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.dataset.phTa=el.placeholder;});
+  const langHooks=[];
   function toast(t){const el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2600);}
 
   /* ================= DATA ================= */
@@ -879,15 +905,31 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     star:'<rect x="12" y="44" width="40" height="12" rx="3" fill="#bfae93" stroke="#7a5a48"/><ellipse cx="32" cy="44" rx="10" ry="4" fill="#d6c8ae" stroke="#7a5a48"/><path d="M44 8l2.4 5 5.4.8-4 3.8 1 5.4-4.8-2.6-4.8 2.6 1-5.4-4-3.8 5.4-.8z" fill="#f6c86a" stroke="#a87a28"/><circle cx="20" cy="14" r="1.5" fill="#c99a3e"/><circle cx="28" cy="24" r="1.2" fill="#c99a3e"/>',
     rice:'<ellipse cx="32" cy="48" rx="22" ry="7" fill="url(#g-gold)" stroke="#8a6420"/><g fill="#fff8e0" stroke="#e8b923" stroke-width=".6"><ellipse cx="20" cy="22" rx="1.6" ry="3.2" transform="rotate(30 20 22)"/><ellipse cx="30" cy="14" rx="1.6" ry="3.2"/><ellipse cx="42" cy="20" rx="1.6" ry="3.2" transform="rotate(-30 42 20)"/><ellipse cx="26" cy="32" rx="1.6" ry="3.2" transform="rotate(60 26 32)"/><ellipse cx="38" cy="30" rx="1.6" ry="3.2" transform="rotate(-50 38 30)"/></g><g fill="#f5c518"><ellipse cx="34" cy="24" rx="1.6" ry="3.2" transform="rotate(20 34 24)"/><ellipse cx="22" cy="40" rx="1.6" ry="3" transform="rotate(80 22 40)"/></g>'};
 
+  const SPe='T. Subbulapuram',CKe='Chakkampatti';
+  const inviterGroomEn=[['N.P. Nagendran – N. Chitra','NNC Tex'],['N.P. Senthilkumar – S. Bakkiyalakshmi','S. Bakkiyalakshmi Tex'],['N.P. Marimuthu – M. Muthuselvi','P. Marimuthu Tex'],['N.P. Karuppasamy – K. Bathirakali','P.V.K Textiles'],["Groom's brother: S. Suresh, M.Sc.",'ICICI Bank, Chennai']];
+  const groomRelEn=[
+    ["Groom's maternal uncles &amp; aunts",[['Mr. V. Palanikumar – P. Rani','S.K Tex',SPe],['Mr. V. Subburaj – S. Vijayalakshmi','Sri Krishna Textiles',SPe]]],
+    ["Groom's paternal uncle &amp; aunt",[['Mr. S. Thandapani – T. Rajeswari','',SPe]]],
+    ["Groom's brothers &amp; sisters",[['Mr. N. Hemanathan, B.Com. (CA) – H. Krishnaveni','Krishnu Cotton Sarees',SPe],['Mr. N. Jeeva, M.Sc.','',SPe],['Mrs. P. Kavya, B.A. – N. Palanirajan','',SPe],['Ms. M. Nadhiya, B.Com. (CA)','',SPe],['Mr. K. Mukesh, B.Com. (P.A)','',SPe],['Ms. K. Gopika','',SPe],['Ms. T. Komalamadhana, BCA','',SPe],['Mr. T. Naga Arjun','',SPe]]],
+    ["Groom's cousins",[['Mr. S. Navaneethakrishnan, B.E. (Mech)','',SPe],['Ms. S. Chandini Krishna','',SPe],['Ms. P. Chandrika','',SPe]]],
+    ['Little ones','KUTTIES']];
+  const brideRelEn=[
+    ["Bride's maternal uncles &amp; aunts",[['Late M. Ramalingam – R. Pappa','',SPe],['Mr. M. Balasubramani, MBA – B. Anandasundarakaleeswari, PGDCA','Canara Bank','Maharashtra']]],
+    ["Bride's paternal uncles &amp; aunts",[['Late M. Subburam – S. Panchavarnam','',CKe],['Late R.M. Rajagopal – R. Muniammal','',CKe],['Late M. Kamaraj – Late K. Chandra','',CKe],['Mr. M. Ganesaboopathi – K. Lakshmi','',CKe],['Mr. M. Marimuthu – M. Subbuthai','',CKe],['Mr. M. Karuppasamy – K. Umaiyal','',SPe],['Late K. Mallaiyasamy – M. Veluthai','',SPe],['Mr. V. Subburaj – S. Vijayalakshmi','Sri Krishna Textiles',SPe]]],
+    ["Bride's aunts &amp; uncles (father's sisters)",[['Mr. M. Ganesan – K. Eswari','',SPe],['Mr. P. Subramani – S. Thangam','',CKe]]]];
+  const ritualsEn=[['Parisam','Both families exchange thambulam to formally confirm the wedding.'],['Kappu Kattuthal','A turmeric thread is tied on the couple\'s wrists, praying for their well-being.'],['Mangalya Dharanam','At the auspicious moment, to the sound of the nadaswaram, the groom ties the sacred thali.'],['Maalai Maatral','The couple joyfully exchange garlands.'],['Ammi Mithithal · Arundhathi Paarthal','Symbols of a steadfast and loving married life.'],['Aaseervadham','Elders shower akshathai and bless the couple.']];
   const relRow=(n,sub,from)=>`<div class="rel"><span class="who"><b>${esc(n)}</b>${sub?`<small>${esc(sub)}</small>`:''}</span>${from?`<span class="from">${esc(from)}</span>`:''}</div>`;
-  $('inv-groom').innerHTML=inviterGroom.map(r=>relRow(r[0],r[1])).join('');
   const renderGroups=g=>g.map(([t,rows])=>rows==='KUTTIES'
-      ?`<div class="grp"><h4>${t}</h4><div class="kutties">ப.விஷ்வா &nbsp;·&nbsp; ப.விஷாகா</div></div>`
+      ?`<div class="grp"><h4>${t}</h4><div class="kutties">${T('ப.விஷ்வா &nbsp;·&nbsp; ப.விஷாகா','P. Vishwa &nbsp;·&nbsp; P. Vishaka')}</div></div>`
       :`<div class="grp"><h4>${t}</h4>${rows.map(r=>relRow(r[0],r[1],r[2])).join('')}</div>`).join('');
-  $('p-groom').innerHTML=renderGroups(groomRel);
-  $('p-bride').innerHTML=renderGroups(brideRel);
-  $('ritualList').innerHTML=rituals.map((r,i)=>`<article class="card ritual"><span class="num">0${i+1}</span><svg viewBox="0 0 64 64">${ritualIcons[r[2]]}</svg><h4>${r[0]}</h4><p>${r[1]}</p></article>`).join('');
-  document.querySelectorAll('.panel').forEach(p=>p.querySelectorAll('.rel,.grp h4').forEach((el,i)=>el.style.animationDelay=(i*0.04)+'s'));
+  function renderData(){
+    $('inv-groom').innerHTML=T(inviterGroom,inviterGroomEn).map(r=>relRow(r[0],r[1])).join('');
+    $('p-groom').innerHTML=renderGroups(T(groomRel,groomRelEn));
+    $('p-bride').innerHTML=renderGroups(T(brideRel,brideRelEn));
+    $('ritualList').innerHTML=rituals.map((r,i)=>{const t=T(r,ritualsEn[i]);return `<article class="card ritual"><span class="num">0${i+1}</span><svg viewBox="0 0 64 64">${ritualIcons[r[2]]}</svg><h4>${t[0]}</h4><p>${t[1]}</p></article>`;}).join('');
+    document.querySelectorAll('.panel').forEach(p=>p.querySelectorAll('.rel,.grp h4').forEach((el,i)=>el.style.animationDelay=(i*0.04)+'s'));
+  }
+  renderData();langHooks.push(renderData);
 
   document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
@@ -921,12 +963,15 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
       h+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="1.4" ry="2.8" fill="${i%5?'#fff8e0':'#f5c518'}" stroke="#e0c06a" stroke-width=".4" transform="rotate(${Math.round(Math.random()*180)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;}
     $('riceHeap').innerHTML=h;
   })();
-  (function marquee(){
+  function marquee(){
+    if(LANG==='en'){const u='<span>Subha Muhurtham<em>✦</em>20 · 11 · 2026<em>✦</em>S. Prabu ❤ S. Renuga<em>✦</em>சுபமுகூர்த்தம்<em>✦</em>T. Subbulapuram<em>✦</em>With love, we invite you<em>✦</em></span>';$('mq').innerHTML=u+u+u+u;return;}
     const unit='<span>சுபமுகூர்த்தம்<em>✦</em>20 · 11 · 2026<em>✦</em>செ.பிரபு ❤ ச.ரேணுகா<em>✦</em>Prabu weds Renuga<em>✦</em>தி.சுப்புலாபுரம்<em>✦</em>அன்புடன் அழைக்கின்றோம்<em>✦</em></span>';
     $('mq').innerHTML=unit+unit+unit+unit;
-  })();
+  }
+  marquee();langHooks.push(marquee);
   document.querySelectorAll('.split').forEach(el=>{el.innerHTML=[...el.textContent].map(c=>`<span>${c}</span>`).join('');});
-  document.querySelectorAll('.words').forEach(el=>{el.innerHTML=el.textContent.trim().split(/\s+/).map(w=>`<span class="w">${w}</span>`).join(' ');});
+  const splitWords=el=>{el.innerHTML=el.textContent.trim().split(/\s+/).map(w=>`<span class="w">${w}</span>`).join(' ');};
+  document.querySelectorAll('.words').forEach(splitWords);
 
   /* ================= GUEST NAME ================= */
   function guestName(){
@@ -936,8 +981,12 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     return h.replace(/\b\w/g,c=>c.toUpperCase()).slice(0,40);
   }
   const g=guestName();
-  if(g){$('guest').innerHTML='உயர்திரு. <b>'+esc(g)+'</b> அவர்களுக்கு';$('w-name').value=g;}
-  else $('guest').textContent='அன்புடன் தங்களை அழைக்கின்றோம்';
+  if(g)$('w-name').value=g;
+  function guestText(){
+    $('guest').innerHTML=g?T('உயர்திரு. <b>'+esc(g)+'</b> அவர்களுக்கு','Dear <b>'+esc(g)+'</b>'):T('அன்புடன் தங்களை அழைக்கின்றோம்','You are cordially invited');
+    $('scGuest').innerHTML=g?T('உயர்திரு. <b>'+esc(g)+'</b>,<br>நீங்கள் அன்புடன் அழைக்கப்படுகிறீர்கள் 🙏','Dear <b>'+esc(g)+'</b>,<br>you are cordially invited 🙏'):T('நீங்கள் அன்புடன்<br>அழைக்கப்படுகிறீர்கள் 🙏','You are cordially<br>invited 🙏');
+  }
+  guestText();langHooks.push(guestText);
 
   /* ================= AUDIO: bells + mangala isai ================= */
   let ctx=null,master=null,musicOn=false,schedTimer=null,nextT=0,step=0,droneNodes=[];
@@ -1015,11 +1064,11 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     if(!ctx)return;try{ctx.resume();}catch(e){}
     if(musicOn)return;musicOn=true;lastF=null;step=0;nextT=ctx.currentTime+1.2;startDrone();
     schedTimer=setInterval(scheduler,60);
-    $('music').classList.remove('off');$('music').querySelector('.lbl').textContent='மங்கள இசை';
+    $('music').classList.remove('off');$('music').querySelector('.lbl').textContent=T('மங்கள இசை','Wedding music');
   }
   function stopMusic(){
     musicOn=false;clearInterval(schedTimer);stopDrone();
-    $('music').classList.add('off');$('music').querySelector('.lbl').textContent='இசை நிறுத்தப்பட்டது';
+    $('music').classList.add('off');$('music').querySelector('.lbl').textContent=T('இசை நிறுத்தப்பட்டது','Music off');
   }
   $('music').addEventListener('click',()=>{initAudio();musicOn?stopMusic():startMusic();});
   document.addEventListener('visibilitychange',()=>{if(!ctx)return;document.hidden?ctx.suspend():(musicOn&&ctx.resume());});
@@ -1074,7 +1123,6 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 
   /* ================= SCRATCH CARD ================= */
   const SC={done:false};
-  if(g)$('scGuest').innerHTML='உயர்திரு. <b>'+esc(g)+'</b>,<br>நீங்கள் அன்புடன் அழைக்கப்படுகிறீர்கள் 🙏';
   function paintFoil(){
     const cv=$('scCanvas'),r=cv.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
     cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);
@@ -1089,8 +1137,10 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     x.textAlign='center';x.fillStyle='#5a0f1b';
     x.beginPath();x.arc(W/2,H*.36,Math.min(W,H)*.12,0,6.3);x.fillStyle='rgba(90,15,27,.85)';x.fill();
     x.fillStyle='#f6e2a4';x.font=`${Math.round(W*.09)}px "Great Vibes", cursive`;x.fillText('P&R',W/2,H*.36+W*.03);
-    x.fillStyle='#5a0f1b';x.font=`800 ${Math.round(W*.075)}px "Noto Serif Tamil", serif`;x.fillText('இங்கே தேய்க்கவும்',W/2,H*.58);
-    x.font=`italic 600 ${Math.round(W*.06)}px "Cormorant Garamond", serif`;x.fillText('Scratch to reveal',W/2,H*.66);
+    x.fillStyle='#5a0f1b';if(LANG==='en'){x.font=`700 ${Math.round(W*.105)}px "Cormorant Garamond", serif`;x.fillText('Scratch here',W/2,H*.58);
+      x.font=`700 ${Math.round(W*.05)}px "Noto Serif Tamil", serif`;x.fillText('இங்கே தேய்க்கவும்',W/2,H*.66);}
+    else{x.font=`800 ${Math.round(W*.075)}px "Noto Serif Tamil", serif`;x.fillText('இங்கே தேய்க்கவும்',W/2,H*.58);
+      x.font=`italic 600 ${Math.round(W*.06)}px "Cormorant Garamond", serif`;x.fillText('Scratch to reveal',W/2,H*.66);}
     x.font=`600 ${Math.round(W*.05)}px "Cormorant Garamond", serif`;x.fillText('✦  ✦  ✦',W/2,H*.76);
   }
   function scratchReady(){
@@ -1116,7 +1166,7 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   function reveal(){
     if(SC.done)return;SC.done=true;
     $('scCanvas').classList.add('gone');$('scBar').style.width='100%';$('scCard').classList.add('won');
-    $('scHint').style.visibility='visible';$('scHint').innerHTML='🎉 இனிய திருமண நாள் · Save the date!';
+    $('scHint').style.visibility='visible';$('scHint').innerHTML=T('🎉 இனிய திருமண நாள் · Save the date!','🎉 Save the date! · இனிய திருமண நாள்');
     if(ctx){chime();}shower(80,'petal');
     try{navigator.vibrate&&navigator.vibrate([40,60,40]);}catch(e){}
     $('scSkip').style.display='none';$('scGo').classList.add('on');
@@ -1149,7 +1199,7 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   function tickCd(){
     const now=Date.now();let d=target-now;
     const ist=new Date(now+5.5*3600e3);if(ist.getUTCFullYear()===2026&&ist.getUTCMonth()===10&&ist.getUTCDate()===20)$('today').classList.add('on');
-    if(d<=0){$('countdown').innerHTML='<div class="cd-done">'+(now<target+3600e3?'சுபமுகூர்த்தம் நடைபெறுகிறது 🙏':'திருமணம் இனிதே நடைபெற்றது · வாழ்த்துகள்! 🙏')+'</div>';return clearInterval(cdTimer);}
+    if(d<=0){$('countdown').innerHTML='<div class="cd-done">'+(now<target+3600e3?T('சுபமுகூர்த்தம் நடைபெறுகிறது 🙏','The muhurtham is happening now 🙏'):T('திருமணம் இனிதே நடைபெற்றது · வாழ்த்துகள்! 🙏','The wedding was happily celebrated · Thank you! 🙏'))+'</div>';return clearInterval(cdTimer);}
     const s=Math.floor(d/1000);
     setCd('cd-d',pad(Math.floor(s/86400)));setCd('cd-h',pad(Math.floor(s%86400/3600)));setCd('cd-m',pad(Math.floor(s%3600/60)));setCd('cd-s',pad(s%60));
   }
@@ -1164,9 +1214,11 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
     gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});
     gsap.to('.mandala',{y:160,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
     gsap.to('.hero .names',{y:-30,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-    document.querySelectorAll('.words').forEach(p=>{
-      gsap.fromTo(p.querySelectorAll('.w'),{opacity:.15},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:p,start:'top 85%',end:'bottom 55%',scrub:true}});
+    window.__wordTweens=[];
+    const bindWords=()=>document.querySelectorAll('.words').forEach(p=>{
+      window.__wordTweens.push(gsap.fromTo(p.querySelectorAll('.w'),{opacity:.15},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:p,start:'top 85%',end:'bottom 55%',scrub:true}}));
     });
+    bindWords();window.__bindWords=bindWords;
     const route=document.getElementById('route');const L=route.getTotalLength();
     route.style.strokeDasharray=L;route.style.strokeDashoffset=L;
     gsap.to(route,{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:'#venueCard',start:'top 80%',end:'center 50%',scrub:true,
@@ -1184,13 +1236,14 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
 
   /* ================= BLESSING ================= */
   let blessN=parseInt(store.get('pr-bless')||'0',10)||0;
-  function showBless(){$('blessCount').innerHTML=blessN?`நீங்கள் <b>${blessN}</b> முறை ஆசீர்வதித்துள்ளீர்கள் 🙏`:'';}
+  function showBless(){$('blessCount').innerHTML=blessN?T(`நீங்கள் <b>${blessN}</b> முறை ஆசீர்வதித்துள்ளீர்கள் 🙏`,`You have blessed the couple <b>${blessN}</b> time${blessN>1?'s':''} 🙏`):'';}
+  langHooks.push(()=>showBless());
   showBless();
   function doBless(){
     initAudio();if(ctx){ctx.resume();bell(ctx.currentTime+.02,784,.12);}
     shower(110,'rice');blessN++;store.set('pr-bless',blessN);showBless();
     try{navigator.vibrate&&navigator.vibrate([30,40,30]);}catch(e){}
-    toast('உங்கள் ஆசீர்வாதம் மணமக்களைச் சேர்ந்தது 🙏');
+    toast(T('உங்கள் ஆசீர்வாதம் மணமக்களைச் சேர்ந்தது 🙏','Your blessings have reached the couple 🙏'));
     if(HAS_GSAP&&!RM)gsap.fromTo('#plate',{rotate:0},{rotate:-14,duration:.18,yoyo:true,repeat:1,ease:'power2.out'});
   }
   $('blessBtn').addEventListener('click',doBless);$('plate').addEventListener('click',doBless);
@@ -1200,12 +1253,12 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   form.addEventListener('submit',e=>{
     e.preventDefault();
     const name=$('w-name').value.trim(),wish=$('w-msg').value.trim();
-    if(!name){$('err').textContent='தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்';$('w-name').focus();return;}
+    if(!name){$('err').textContent=T('தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்','Please enter your name');$('w-name').focus();return;}
     $('err').textContent='';
-    const msg=`🌸 வாழ்த்துகள் 🌸\nபிரபு ❤ ரேணுகா\n\n${wish||'மணமக்கள் நீடூழி வாழ்க!'}\n\n— ${name}`;
+    const msg=`🌸 வாழ்த்துகள் 🌸\nபிரபு ❤ ரேணுகா\n\n${wish||T('மணமக்கள் நீடூழி வாழ்க!','Wishing the couple a long and happy married life!')}\n\n— ${name}`;
     $('waG').href='https://wa.me/919843383439?text='+encodeURIComponent(msg);
     $('waB').href='https://wa.me/919585621362?text='+encodeURIComponent(msg);
-    $('resTitle').textContent='நன்றி, '+name+'!';
+    $('resTitle').textContent=T('நன்றி, ','Thank you, ')+name+'!';
     form.style.display='none';$('result').classList.add('on');
     shower(40,'petal');
   });
@@ -1216,11 +1269,12 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   function makeLink(){
     const raw=$('lk-name').value.trim();
     const slug=raw.normalize('NFKD').replace(/[^A-Za-z0-9 \-]/g,'').trim().replace(/\s+/g,'-').slice(0,40);
-    if(!slug){toast(raw?'பெயரை English எழுத்துகளில் type செய்யவும்':'விருந்தினர் பெயரை உள்ளிடவும்');return;}
+    if(!slug){toast(raw?T('பெயரை English எழுத்துகளில் type செய்யவும்','Please type the name in English letters'):T('விருந்தினர் பெயரை உள்ளிடவும்','Please enter the guest\'s name'));return;}
     lastLink=PAGE_URL+'#'+slug;
     $('lk-url').textContent=lastLink;$('lk-box').classList.add('on');
     const nm=slug.replace(/-/g,' ');
-    const msg=`🌸 திருமண அழைப்பிதழ் 🌸\nஅன்புள்ள ${nm} அவர்களுக்கு,\nசெ.பிரபு ❤ ச.ரேணுகா திருமணத்திற்கு அன்புடன் அழைக்கின்றோம் 🙏\n📅 20-11-2026 வெள்ளி, காலை 6:00–7:00\n\nஅழைப்பிதழ்: ${lastLink}`;
+    const msg=T(`🌸 திருமண அழைப்பிதழ் 🌸\nஅன்புள்ள ${nm} அவர்களுக்கு,\nசெ.பிரபு ❤ ச.ரேணுகா திருமணத்திற்கு அன்புடன் அழைக்கின்றோம் 🙏\n📅 20-11-2026 வெள்ளி, காலை 6:00–7:00\n\nஅழைப்பிதழ்: ${lastLink}`,
+      `🌸 Wedding Invitation 🌸\nDear ${nm},\nWe cordially invite you to the wedding of S. Prabu ❤ S. Renuga 🙏\n📅 Friday, 20 Nov 2026, 6:00–7:00 AM\n\nInvitation: ${lastLink}`);
     $('lk-wa').href='https://wa.me/?text='+encodeURIComponent(msg);
     if(window.QRCode){
       try{$('gqrIn').innerHTML='';new QRCode($('gqrIn'),{text:lastLink,width:300,height:300,colorDark:'#5a0f1b',colorLight:'#fffaf0',correctLevel:QRCode.CorrectLevel.H});
@@ -1230,9 +1284,28 @@ footer .tiny{font-size:.8rem;opacity:.65;margin-top:26px}
   $('lk-make').addEventListener('click',makeLink);
   $('lk-name').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();makeLink();}});
   $('lk-copy').addEventListener('click',async()=>{
-    try{await navigator.clipboard.writeText(lastLink);toast('Link copy ஆனது ✓');}
-    catch(e){const r=document.createRange();r.selectNodeContents($('lk-url'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Link select ஆனது — copy செய்யவும்');}
+    try{await navigator.clipboard.writeText(lastLink);toast(T('Link copy ஆனது ✓','Link copied ✓'));}
+    catch(e){const r=document.createRange();r.selectNodeContents($('lk-url'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast(T('Link select ஆனது — copy செய்யவும்','Link selected — please copy it'));}
   });
+
+  /* ================= LANGUAGE SWITCH ================= */
+  function applyLang(lang,first){
+    LANG=lang;document.documentElement.lang=lang==='en'?'en':'ta';store.set('pr-lang',lang);
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const k=el.dataset.i18n,html=lang==='en'?EN_TEXT[k]:TA_TEXT[el.dataset.i18nId];
+      if(html===undefined)return;
+      if(el.classList.contains('words')){el.textContent=html;splitWords(el);}else el.innerHTML=html;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=lang==='en'?EN_TEXT[el.dataset.i18nPh]:el.dataset.phTa;});
+    langHooks.forEach(f=>{try{f()}catch(e){}});
+    if(window.__wordTweens){window.__wordTweens.forEach(t=>{try{t.scrollTrigger&&t.scrollTrigger.kill();t.kill();}catch(e){}});window.__wordTweens=[];window.__bindWords&&window.__bindWords();}
+    if(typeof SC!=='undefined'&&!SC.done&&$('scratch').classList.contains('on'))paintFoil();
+    if($('music').classList.contains('show'))$('music').querySelector('.lbl').textContent=musicOn?T('மங்கள இசை','Wedding music'):T('இசை நிறுத்தப்பட்டது','Music off');
+    document.querySelectorAll('#lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===lang));
+    if(!first&&window.ScrollTrigger)ScrollTrigger.refresh();
+  }
+  document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.l!==LANG)applyLang(b.dataset.l);}));
+  if(LANG==='en')applyLang('en',true);else document.querySelectorAll('#lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l==='ta'));
 
   /* ================= SHARE ================= */
   const shareText=`🌸 திருமண அழைப்பிதழ் 🌸\nசெ.பிரபு MCA., ❤ ச.ரேணுகா B.E.,\n📅 20-11-2026 வெள்ளி, காலை 6:00–7:00\n📍 ஸ்ரீ நல்லதங்காள் ஸ்ரீ பாப்பாத்தியம்மாள் திருக்கோவில் மண்டபம், தி.சுப்புலாபுரம்\n\nஅழைப்பிதழ்: ${PAGE_URL}\nMap: ${MAP}\n\nதங்கள் சுற்றம் சூழ வருகைதந்து மணமக்களை ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கின்றோம் 🙏`;
